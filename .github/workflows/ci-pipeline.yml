@@ -61,6 +61,20 @@ jobs:
       - name: clone
         uses: actions/checkout@v4
 
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-docker-build
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/build_dir/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('~/build_dir/') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       # Build the container image.
       - name: docker
-        run: docker build .
+        run: docker build --cache-from ~/build_dir/ --cache-to ~/build_dir .

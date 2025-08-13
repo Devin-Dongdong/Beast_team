@@ -35,7 +35,6 @@ jobs:
   # Define the pre-build-scan job.
   pre-build-scan:
     name: pre-build-scan
-    needs: test
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep

@@ -51,7 +51,9 @@ jobs:
   # Define the build job.
   build:
     name: build
-    needs: pre-build-scan
+    needs: 
+      - pre-build-scan
+      - test
     runs-on: ubuntu-latest
     steps:
 
